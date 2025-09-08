@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistema de Almoxarifado</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script src="../js/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
+
+
+<header>
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+    <h1>Controle de Almoxarifado</h1>
+</header>
+
+<aside id="sidebar" class="sidebar">
+     <button onclick="abrirAba('cliente')" id="btnCliente"><i class="fas fa-box"></i> Usinagem</button>
+  <button onclick="abrirAba('funcionario')" id="btnFuncionario"><i class="fas fa-user"></i> Pedidos: Usinagem</button>
+  <button onclick="abrirAba('localização')" id="btnLocalizacao"><i class="fas fa-map-marker-alt"></i> Local</button>
+  <button onclick="abrirAba('relatorio')" id="btnRelatorio"><i class="fas fa-file-alt"></i> Gerar Relatorio</button>
+  <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+
+</aside>
+
+<div class="main-content" id="mainContent">
+
+    <section id="cliente" class="aba ">
+        <h2>Catálogo de Produtos:</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Pesquisar produtos..." oninput="filtrarProdutos()" />
+        </div>
+        <div class="produtos-container" id="produtosContainer">
+
+            <div class="produto" data-nome="Grampo Ater BT MT">
+                <img src="https://placehold.co/150x150?text=Grampo Ater BT MT" alt="Grampo Ater BT MT" />
+                <h3>Grampo Ater BT MT</h3>
+                
+                <button class="acao" onclick="adicionarPedido('Grampo Ater BT MT',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Paraf Fenda CAB">
+                <img src="https://placehold.co/150x150?text=Paraf Fenda CAB" alt="Paraf Fenda CAB" />
+                <h3>Paraf Fenda CAB</h3>
+                <button class="acao" onclick="adicionarPedido('Paraf Fenda CAB',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Arruela Pressao M6 DIN">
+                <img src="https://placehold.co/150x150?text=Arruela Pressao M6 DIN" alt="Arruela Pressao M6 DIN" />
+                <h3>Arruela Pressao M6 DIN</h3>
+                <button class="acao" onclick="adicionarPedido('Arruela Pressao M6 DIN',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Abraçadeira Aluminio">
+                <img src="https://placehold.co/150x150?text=Abraçadeira Aluminio" alt="Abraçadeira Aluminio" />
+                <h3>Abraçadeira Aluminio</h3>
+                <button class="acao" onclick="adicionarPedido('Abraçadeira Aluminio',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Cabo Cobre Eletrol">
+                <img src="https://placehold.co/150x150?text=Cabo Cobre Eletrol" alt="Cabo Cobre Eletrol" />
+                <h3>Cabo Cobre Eletrol</h3>
+                <button class="acao" onclick="adicionarPedido('Cabo Cobre Eletrol',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Terminal Cobre Rosqueado">
+                <img src="https://placehold.co/150x150?text=Terminal Cobre Rosqueado" alt="Terminal Cobre Rosqueado" />
+                <h3>Terminal Cobre Rosqueado</h3>
+                <button class="acao" onclick="adicionarPedido('Terminal Cobre Rosqueado',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Porca SX W 5/8">
+                <img src="https://placehold.co/150x150?text=Porca SX W 5/8" alt="Porca SX W 5/8" />
+                <h3>Porca SX W 5/8</h3>
+                <button class="acao" onclick="adicionarPedido('Porca SX W 5/8',this)">Pedir</button>
+            </div>
+
+            <div class="produto" data-nome="Etiqueta Metalica Manual">
+                <img src="https://placehold.co/150x150?text=Etiqueta Metalica Manual" alt="Etiqueta Metalica Manual" />
+                <h3>Etiqueta Metalica Manual</h3>
+                <button class="acao" onclick="adicionarPedido('Etiqueta Metalica Manual',this)">Pedir</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="funcionario"class= 'aba'>
+        <h2>Pedidos Recebidos:</h2>
+        <div id="pedidos">
+            <div id="listaPedidos"></div>
+        </div>
+    </section>
+    <section id="relatorio" class="aba">
+        <h2>Relatório</h2>
+        <button onclick="gerarRelatorioPDF()" class="acao"><i class="fas fa-file-pdf"></i> Baixar PDF</button>
+      </section>
+      
+
+  
+    <section id="localização" class="aba">
+        <h2>Localização:</h2>
+     <div class="prateleira">
+    <div class="prateleira-box" id="prateleira1">
+        <div class="bolinha bolinha-superior" id="bolinha1-superior"></div>
+        <div class="prateleira-texto">A1</div>
+        <div class="bolinha bolinha-inferior" id="bolinha1-inferior"></div>
+    </div>
+
+    <div class="prateleira-box" id="prateleira2">
+        <div class="bolinha bolinha-superior" id="bolinha2-superior"></div>
+        <div class="prateleira-texto">B1</div>
+        <div class="bolinha bolinha-inferior" id="bolinha2-inferior"></div>
+    </div>
+
+    <div class="prateleira-box" id="prateleira3">
+        <div class="bolinha bolinha-superior" id="bolinha3-superior"></div>
+        <div class="prateleira-texto">A2</div>
+        <div class="bolinha bolinha-inferior" id="bolinha3-inferior"></div>
+    </div>
+
+    <div class="prateleira-box" id="prateleira4">
+        <div class="bolinha bolinha-superior" id="bolinha4-superior"></div>
+        <div class="prateleira-texto">B2</div>
+        <div class="bolinha bolinha-inferior" id="bolinha4-inferior"></div>
+    </div>
+</div>
+
+    </div>
+
+        
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+</body>
+</div>
+
+</html>
